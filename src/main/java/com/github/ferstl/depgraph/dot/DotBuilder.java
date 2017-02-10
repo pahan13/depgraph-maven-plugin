@@ -20,6 +20,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import com.github.ferstl.depgraph.graph.GraphBuilder;
 import static com.github.ferstl.depgraph.dot.DotEscaper.escape;
 
 /**
@@ -29,7 +30,7 @@ import static com.github.ferstl.depgraph.dot.DotEscaper.escape;
  *
  * @param <T> Type of the graph nodes.
  */
-public final class DotBuilder<T> {
+public final class DotBuilder<T> implements GraphBuilder<T> {
 
   private String graphName;
   private AttributeBuilder nodeAttributeBuilder;
@@ -89,6 +90,7 @@ public final class DotBuilder<T> {
   }
 
   // no edge will be created in case one or both nodes are null.
+  @Override
   public DotBuilder<T> addEdge(T from, T to) {
     if (from != null && to != null) {
       addNode(from);
@@ -115,6 +117,7 @@ public final class DotBuilder<T> {
    * @param node Node.
    * @return The firstly added node or the given node if not present.
    */
+  @Override
   public T getEffectiveNode(T node) {
     String key = escape(this.nodeNameRenderer.createNodeName(node));
     if (this.nodeDefinitions.containsKey(key)) {
