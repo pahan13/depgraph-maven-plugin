@@ -15,11 +15,10 @@
  */
 package com.github.ferstl.depgraph.gml;
 
-import com.github.ferstl.depgraph.dot.AttributeBuilder;
+import java.util.Map.Entry;
 import com.github.ferstl.depgraph.dot.EdgeAttributeRenderer;
-import com.github.ferstl.depgraph.dot.NodeAttributeRenderer;
 import com.github.ferstl.depgraph.dot.NodeNameRenderer;
-import com.github.ferstl.depgraph.graph.GraphBuilder;
+import com.github.ferstl.depgraph.graph.AbstractGraphBuilder;
 import com.github.ferstl.depgraph.graph.GraphNode;
 
 /**
@@ -29,66 +28,31 @@ import com.github.ferstl.depgraph.graph.GraphNode;
  *
  * @param <T> Type of the graph nodes.
  */
-public final class GmlBuilder implements GraphBuilder<GraphNode> {
+public final class GmlBuilder extends AbstractGraphBuilder {
 
   @Override
-  public GmlBuilder addEdge(GraphNode from, GraphNode to) {
-    // TODO Auto-generated method stub
-    return this;
-  }
-
-  @Override
-  public GraphNode getEffectiveNode(GraphNode node) {
-    // TODO Auto-generated method stub
-    return node;
-  }
-
-  @Override
-  public GmlBuilder graphName(String artifactId) {
-    // TODO Auto-generated method stub
-    return this;
-  }
-
-  @Override
-  public GmlBuilder addEdge(GraphNode from, GraphNode to, EdgeAttributeRenderer<? super GraphNode> edgeAttributeRenderer) {
-    // TODO Auto-generated method stub
-    return this;
-  }
-
-  @Override
-  public GraphBuilder<GraphNode> nodeStyle(AttributeBuilder defaultNodeAttributes) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public GraphBuilder<GraphNode> edgeStyle(AttributeBuilder defaultEdgeAttributes) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public GraphBuilder<GraphNode> useNodeNameRenderer(NodeNameRenderer<? super GraphNode> nodeNameRenderer) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public GraphBuilder<GraphNode> useNodeAttributeRenderer(NodeAttributeRenderer<? super GraphNode> nodeAttributeRenderer) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public GraphBuilder<GraphNode> useEdgeAttributeRenderer(EdgeAttributeRenderer<? super GraphNode> edgeAttributeRenderer) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public GraphBuilder<GraphNode> omitSelfReferences() {
-    // TODO Auto-generated method stub
-    return null;
+  public String toString() {
+    StringBuilder result = new StringBuilder();
+    result.append("graph [\n");
+    
+    //output nodes
+    for (Entry<String, GraphNode> entry : nodeDefinitions.entrySet()) {
+      result.append("node [\n");
+      result.append("id \"").append(entry.getKey()).append("\"\n");
+      result.append("label \"").append(entry.getKey()).append("\"\n");
+      result.append("]\n\n");
+    }
+    
+    //output edges
+    for (GraphEdge edge : edgeDefinitions) {
+      result.append("edge [\n");
+      result.append("source \"").append(edge.from).append("\"\n");
+      result.append("target \"").append(edge.to).append("\"\n");
+      result.append("]\n\n");
+    }
+    
+    result.append("]");
+    return result.toString();
   }
 
 }
