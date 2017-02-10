@@ -54,6 +54,7 @@ public final class DotBuilder<T> implements GraphBuilder<T> {
     this.edgeDefinitions = new LinkedHashSet<>();
   }
 
+  @Override
   public DotBuilder<T> graphName(String name) {
     this.graphName = name;
     return this;
@@ -102,6 +103,7 @@ public final class DotBuilder<T> implements GraphBuilder<T> {
     return this;
   }
 
+  @Override
   public DotBuilder<T> addEdge(T from, T to, EdgeAttributeRenderer<? super T> edgeAttributeRenderer) {
     EdgeAttributeRenderer<? super T> originalEdgeAttributeRenderer = this.edgeAttributeRenderer;
     this.edgeAttributeRenderer = edgeAttributeRenderer;
@@ -194,4 +196,5 @@ public final class DotBuilder<T> implements GraphBuilder<T> {
       }
     };
   }
+
 }

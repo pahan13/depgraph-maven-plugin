@@ -25,27 +25,27 @@ import static java.util.EnumSet.allOf;
 
 
 /**
- * A node visitor that creates edges between the visited nodes using a {@link DotBuilder}. This class implements the
+ * A node visitor that creates edges between the visited nodes using a {@link GraphBuilder}. This class implements the
  * {@code DependencyNodeVisitor} interfaces for dependency trees and dependency graphs and adapts the different node
  * instances using {@link GraphNode}.
  */
 class GraphBuildingVisitor implements org.apache.maven.shared.dependency.graph.traversal.DependencyNodeVisitor, org.apache.maven.shared.dependency.tree.traversal.DependencyNodeVisitor {
 
-  private final DotBuilder<GraphNode> dotBuilder;
+  private final GraphBuilder<GraphNode> builder;
   private final Deque<GraphNode> stack;
   private final ArtifactFilter globalFilter;
   private final ArtifactFilter targetFilter;
   private final Set<NodeResolution> includedResolutions;
 
-  GraphBuildingVisitor(DotBuilder<GraphNode> dotBuilder, ArtifactFilter globalFilter, ArtifactFilter targetFilter, Set<NodeResolution> includedResolutions) {
-    this.dotBuilder = dotBuilder;
+  GraphBuildingVisitor(GraphBuilder<GraphNode> dotBuilder, ArtifactFilter globalFilter, ArtifactFilter targetFilter, Set<NodeResolution> includedResolutions) {
+    this.builder = dotBuilder;
     this.stack = new ArrayDeque<>();
     this.globalFilter = globalFilter;
     this.targetFilter = targetFilter;
     this.includedResolutions = includedResolutions;
   }
 
-  GraphBuildingVisitor(DotBuilder<GraphNode> dotBuilder, ArtifactFilter targetFilter) {
+  GraphBuildingVisitor(GraphBuilder<GraphNode> dotBuilder, ArtifactFilter targetFilter) {
     this(dotBuilder, DoNothingArtifactFilter.INSTANCE, targetFilter, allOf(NodeResolution.class));
   }
 
@@ -76,7 +76,7 @@ class GraphBuildingVisitor implements org.apache.maven.shared.dependency.graph.t
       if (currentParent != null && this.includedResolutions.contains(node.getResolution())) {
         mergeWithExisting(node);
 
-        this.dotBuilder.addEdge(currentParent, node);
+        this.builder.addEdge(currentParent, node);
       }
 
       this.stack.push(node);
@@ -88,7 +88,7 @@ class GraphBuildingVisitor implements org.apache.maven.shared.dependency.graph.t
   }
 
   private void mergeWithExisting(GraphNode node) {
-    GraphNode effectiveNode = this.dotBuilder.getEffectiveNode(node);
+    GraphNode effectiveNode = this.builder.getEffectiveNode(node);
     node.merge(effectiveNode);
   }
 
