@@ -70,7 +70,7 @@ public final class GraphBuilderAdapter {
       throw new DependencyGraphException(e);
     }
 
-    DotBuildingVisitor visitor = new DotBuildingVisitor(dotBuilder, this.targetFilter);
+    GraphBuildingVisitor visitor = new GraphBuildingVisitor(dotBuilder, this.targetFilter);
     root.accept(visitor);
   }
 
@@ -83,7 +83,7 @@ public final class GraphBuilderAdapter {
     }
 
     // Due to MNG-3236, we need to filter the artifacts on our own.
-    DotBuildingVisitor visitor = new DotBuildingVisitor(dotBuilder, globalFilter, this.targetFilter, this.includedResolutions);
+    GraphBuildingVisitor visitor = new GraphBuildingVisitor(dotBuilder, globalFilter, this.targetFilter, this.includedResolutions);
     root.accept(visitor);
   }
 }
