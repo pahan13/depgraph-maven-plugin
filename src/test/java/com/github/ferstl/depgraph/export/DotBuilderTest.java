@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.ferstl.depgraph.dot;
+package com.github.ferstl.depgraph.export;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DefaultArtifact;
@@ -25,9 +25,9 @@ import com.github.ferstl.depgraph.export.EdgeAttributeRenderer;
 import com.github.ferstl.depgraph.export.NodeAttributeRenderer;
 import com.github.ferstl.depgraph.export.NodeNameRenderer;
 import com.github.ferstl.depgraph.graph.GraphNode;
-import static com.github.ferstl.depgraph.dot.DotBuilderMatcher.emptyGraph;
-import static com.github.ferstl.depgraph.dot.DotBuilderMatcher.hasNodes;
-import static com.github.ferstl.depgraph.dot.DotBuilderMatcher.hasNodesAndEdges;
+import static com.github.ferstl.depgraph.export.DotBuilderMatcher.emptyGraph;
+import static com.github.ferstl.depgraph.export.DotBuilderMatcher.hasNodes;
+import static com.github.ferstl.depgraph.export.DotBuilderMatcher.hasNodesAndEdges;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.endsWith;
 import static org.hamcrest.Matchers.startsWith;
