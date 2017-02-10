@@ -20,8 +20,8 @@ import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.ResolutionScope;
-import com.github.ferstl.depgraph.dot.DotBuilder;
 import com.github.ferstl.depgraph.graph.DependencyNodeAttributeRenderer;
+import com.github.ferstl.depgraph.graph.GraphBuilder;
 import com.github.ferstl.depgraph.graph.GraphBuilderAdapter;
 import com.github.ferstl.depgraph.graph.GraphFactory;
 import com.github.ferstl.depgraph.graph.GraphNode;
@@ -46,10 +46,17 @@ public class DependencyGraphByGroupIdMojo extends AbstractGraphMojo {
 
   @Override
   protected GraphFactory createGraphFactory(ArtifactFilter globalFilter, ArtifactFilter targetFilter, StyleConfiguration styleConfiguration) {
-    DotBuilder<GraphNode> dotBuilder = createDotBuilder(styleConfiguration);
+    GraphBuilder<GraphNode> builder = super.createGraphBuilder();
+
+    builder
+        .nodeStyle(styleConfiguration.defaultNodeAttributes())
+        .edgeStyle(styleConfiguration.defaultEdgeAttributes())
+        .useNodeNameRenderer(NodeNameRenderers.GROUP_ID_WITH_SCOPE)
+        .useNodeAttributeRenderer(new DependencyNodeAttributeRenderer(true, false, false, styleConfiguration))
+        .omitSelfReferences();
 
     GraphBuilderAdapter adapter = new GraphBuilderAdapter(this.dependencyTreeBuilder, this.localRepository, targetFilter, allOf(NodeResolution.class));
-    return new SimpleGraphFactory(adapter, globalFilter, dotBuilder);
+    return new SimpleGraphFactory(adapter, globalFilter, builder);
   }
 
   @Override
@@ -58,17 +65,5 @@ public class DependencyGraphByGroupIdMojo extends AbstractGraphMojo {
     resources.add(BuiltInStyleResource.GROUP_ID_ONLY_STYLE);
 
     return resources;
-  }
-
-  private DotBuilder<GraphNode> createDotBuilder(StyleConfiguration styleConfiguration) {
-    DotBuilder<GraphNode> dotBuilder = new DotBuilder<>();
-    dotBuilder
-        .nodeStyle(styleConfiguration.defaultNodeAttributes())
-        .edgeStyle(styleConfiguration.defaultEdgeAttributes())
-        .useNodeNameRenderer(NodeNameRenderers.GROUP_ID_WITH_SCOPE)
-        .useNodeAttributeRenderer(new DependencyNodeAttributeRenderer(true, false, false, styleConfiguration))
-        .omitSelfReferences();
-
-    return dotBuilder;
   }
 }

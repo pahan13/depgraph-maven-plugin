@@ -46,8 +46,12 @@ import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.CommandLineUtils.StringStreamConsumer;
 import org.codehaus.plexus.util.cli.Commandline;
+import com.github.ferstl.depgraph.dot.DotBuilder;
+import com.github.ferstl.depgraph.gml.GmlBuilder;
 import com.github.ferstl.depgraph.graph.DependencyGraphException;
+import com.github.ferstl.depgraph.graph.GraphBuilder;
 import com.github.ferstl.depgraph.graph.GraphFactory;
+import com.github.ferstl.depgraph.graph.GraphNode;
 import com.github.ferstl.depgraph.graph.style.StyleConfiguration;
 import com.github.ferstl.depgraph.graph.style.resource.BuiltInStyleResource;
 import com.github.ferstl.depgraph.graph.style.resource.ClasspathStyleResource;
@@ -110,6 +114,15 @@ abstract class AbstractGraphMojo extends AbstractMojo {
    */
   @Parameter(property = "targetIncludes", defaultValue = "")
   private List<String> targetIncludes;
+  
+  /**
+   * Format of graph file. Currently supported only DOT and GML formats.
+   *
+   * @since 2.0.2
+   */
+  @Parameter(property = "outputFormat", defaultValue = "DOT")
+  private OutputFormat outputFormat;
+
   /**
    * The path to the generated dot file.
    *
@@ -200,6 +213,18 @@ abstract class AbstractGraphMojo extends AbstractMojo {
   }
 
   protected abstract GraphFactory createGraphFactory(ArtifactFilter globalFilter, ArtifactFilter targetFilter, StyleConfiguration styleConfiguration);
+  
+  protected GraphBuilder<GraphNode> createGraphBuilder(){
+    switch (outputFormat) {
+      case DOT:
+        return new DotBuilder<>();    
+      case GML:
+        return new GmlBuilder();    
+      default:
+        //TODO learn how should I handle such situations
+        throw new RuntimeException("This exception must not happend. But unknown outputFormat happened.");
+    }
+  }
 
   /**
    * Override this method to configure additional style resources. It is recommendet to call
@@ -361,5 +386,9 @@ abstract class AbstractGraphMojo extends AbstractMojo {
     }
 
     return dotExecutablePath.toAbsolutePath().toString();
+  }
+  
+  enum OutputFormat{
+    DOT,GML
   }
 }

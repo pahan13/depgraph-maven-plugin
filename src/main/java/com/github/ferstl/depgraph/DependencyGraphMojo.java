@@ -24,6 +24,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import com.github.ferstl.depgraph.dot.DotBuilder;
 import com.github.ferstl.depgraph.graph.DependencyEdgeAttributeRenderer;
 import com.github.ferstl.depgraph.graph.DependencyNodeAttributeRenderer;
+import com.github.ferstl.depgraph.graph.GraphBuilder;
 import com.github.ferstl.depgraph.graph.GraphBuilderAdapter;
 import com.github.ferstl.depgraph.graph.GraphFactory;
 import com.github.ferstl.depgraph.graph.GraphNode;
@@ -87,26 +88,26 @@ public class DependencyGraphMojo extends AbstractGraphMojo {
 
   @Override
   protected GraphFactory createGraphFactory(ArtifactFilter globalFilter, ArtifactFilter targetFilter, StyleConfiguration styleConfiguration) {
-    DotBuilder<GraphNode> dotBuilder = createDotBuilder(styleConfiguration);
+    GraphBuilder<GraphNode> builder = createGraphBuilder(styleConfiguration);
     GraphBuilderAdapter adapter = createGraphBuilderAdapter(targetFilter);
 
-    return new SimpleGraphFactory(adapter, globalFilter, dotBuilder);
+    return new SimpleGraphFactory(adapter, globalFilter, builder);
   }
 
-  DotBuilder<GraphNode> createDotBuilder(StyleConfiguration styleConfiguration) {
-    DotBuilder<GraphNode> dotBuilder = new DotBuilder<GraphNode>()
+  GraphBuilder<GraphNode> createGraphBuilder(StyleConfiguration styleConfiguration) {
+    GraphBuilder<GraphNode> builder = super.createGraphBuilder()        
         .nodeStyle(styleConfiguration.defaultNodeAttributes())
         .edgeStyle(styleConfiguration.defaultEdgeAttributes())
         .useNodeNameRenderer(NodeNameRenderers.VERSIONLESS_ID);
 
     boolean fullGraph = requiresFullGraph();
     if (fullGraph) {
-      dotBuilder.useEdgeAttributeRenderer(new DependencyEdgeAttributeRenderer(this.showVersions, styleConfiguration));
+      builder.useEdgeAttributeRenderer(new DependencyEdgeAttributeRenderer(this.showVersions, styleConfiguration));
     }
 
-    dotBuilder.useNodeAttributeRenderer(new DependencyNodeAttributeRenderer(this.showGroupIds, true, this.showVersions, styleConfiguration));
+    builder.useNodeAttributeRenderer(new DependencyNodeAttributeRenderer(this.showGroupIds, true, this.showVersions, styleConfiguration));
 
-    return dotBuilder;
+    return builder;
   }
 
   private GraphBuilderAdapter createGraphBuilderAdapter(ArtifactFilter targetFilter) {

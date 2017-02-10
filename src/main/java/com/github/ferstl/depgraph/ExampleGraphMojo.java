@@ -23,6 +23,7 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.dependency.tree.DependencyNode;
 import com.github.ferstl.depgraph.dot.DotBuilder;
+import com.github.ferstl.depgraph.graph.GraphBuilder;
 import com.github.ferstl.depgraph.graph.GraphFactory;
 import com.github.ferstl.depgraph.graph.GraphNode;
 import com.github.ferstl.depgraph.graph.style.StyleConfiguration;
@@ -45,18 +46,17 @@ public class ExampleGraphMojo extends DependencyGraphMojo {
 
   @Override
   protected GraphFactory createGraphFactory(ArtifactFilter globalFilter, ArtifactFilter targetFilter, StyleConfiguration styleConfiguration) {
-    DotBuilder<GraphNode> dotBuilder = createDotBuilder(styleConfiguration);
+    GraphBuilder<GraphNode> dotBuilder = createGraphBuilder(styleConfiguration);
     return new ExampleGraphFactory(dotBuilder, globalFilter, targetFilter);
   }
 
-
   static class ExampleGraphFactory implements GraphFactory {
 
-    private final DotBuilder<GraphNode> dotBuilder;
+    private final GraphBuilder<GraphNode> dotBuilder;
     private final ArtifactFilter globalFilter;
     private final ArtifactFilter targetFilter;
 
-    ExampleGraphFactory(DotBuilder<GraphNode> dotBuilder, ArtifactFilter globalFilter, ArtifactFilter targetFilter) {
+    ExampleGraphFactory(GraphBuilder<GraphNode> dotBuilder, ArtifactFilter globalFilter, ArtifactFilter targetFilter) {
       this.dotBuilder = dotBuilder;
       this.globalFilter = globalFilter;
       this.targetFilter = targetFilter;

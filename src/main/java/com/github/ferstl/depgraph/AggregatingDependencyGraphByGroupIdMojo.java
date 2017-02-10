@@ -20,9 +20,9 @@ import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.ResolutionScope;
-import com.github.ferstl.depgraph.dot.DotBuilder;
 import com.github.ferstl.depgraph.graph.AggregatingGraphFactory;
 import com.github.ferstl.depgraph.graph.DependencyNodeAttributeRenderer;
+import com.github.ferstl.depgraph.graph.GraphBuilder;
 import com.github.ferstl.depgraph.graph.GraphBuilderAdapter;
 import com.github.ferstl.depgraph.graph.GraphFactory;
 import com.github.ferstl.depgraph.graph.GraphNode;
@@ -46,8 +46,8 @@ public class AggregatingDependencyGraphByGroupIdMojo extends AbstractAggregating
   @Override
   protected GraphFactory createGraphFactory(ArtifactFilter globalFilter, ArtifactFilter targetFilter, StyleConfiguration styleConfiguration) {
 
-    DotBuilder<GraphNode> dotBuilder = new DotBuilder<>();
-    dotBuilder
+	 GraphBuilder<GraphNode> builder = super.createGraphBuilder();
+    builder
         .nodeStyle(styleConfiguration.defaultNodeAttributes())
         .edgeStyle(styleConfiguration.defaultEdgeAttributes())
         .useNodeNameRenderer(this.mergeScopes ? NodeNameRenderers.GROUP_ID : NodeNameRenderers.GROUP_ID_WITH_SCOPE)
@@ -55,7 +55,7 @@ public class AggregatingDependencyGraphByGroupIdMojo extends AbstractAggregating
         .omitSelfReferences();
 
     GraphBuilderAdapter adapter = new GraphBuilderAdapter(this.dependencyGraphBuilder, targetFilter);
-    return new AggregatingGraphFactory(adapter, globalFilter, dotBuilder, true);
+    return new AggregatingGraphFactory(adapter, globalFilter, builder, true);
   }
 
   @Override

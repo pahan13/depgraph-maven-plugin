@@ -15,7 +15,9 @@
  */
 package com.github.ferstl.depgraph.gml;
 
+import com.github.ferstl.depgraph.dot.AttributeBuilder;
 import com.github.ferstl.depgraph.dot.EdgeAttributeRenderer;
+import com.github.ferstl.depgraph.dot.NodeAttributeRenderer;
 import com.github.ferstl.depgraph.dot.NodeNameRenderer;
 import com.github.ferstl.depgraph.graph.GraphBuilder;
 import com.github.ferstl.depgraph.graph.GraphNode;
@@ -51,6 +53,42 @@ public final class GmlBuilder implements GraphBuilder<GraphNode> {
   public GmlBuilder addEdge(GraphNode from, GraphNode to, EdgeAttributeRenderer<? super GraphNode> edgeAttributeRenderer) {
     // TODO Auto-generated method stub
     return this;
+  }
+
+  @Override
+  public GraphBuilder<GraphNode> nodeStyle(AttributeBuilder defaultNodeAttributes) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public GraphBuilder<GraphNode> edgeStyle(AttributeBuilder defaultEdgeAttributes) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public GraphBuilder<GraphNode> useNodeNameRenderer(NodeNameRenderer<? super GraphNode> nodeNameRenderer) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public GraphBuilder<GraphNode> useNodeAttributeRenderer(NodeAttributeRenderer<? super GraphNode> nodeAttributeRenderer) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public GraphBuilder<GraphNode> useEdgeAttributeRenderer(EdgeAttributeRenderer<? super GraphNode> edgeAttributeRenderer) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public GraphBuilder<GraphNode> omitSelfReferences() {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }
