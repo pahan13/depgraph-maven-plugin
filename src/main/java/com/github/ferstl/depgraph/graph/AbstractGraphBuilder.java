@@ -27,15 +27,6 @@ public abstract class AbstractGraphBuilder implements GraphBuilder<GraphNode> {
   }
 
   /**
-   * After Renderer renderes object it still can contain special characters for given output file.
-   * To avoid such problems rendered name also escaped for given format.
-   * 
-   * @param toBeEscaped
-   * @return
-   */
-  protected abstract String escape(String toBeEscaped);
-  
-  /**
    * toString method is used to output target graph :(
    */
   @Override
@@ -85,7 +76,7 @@ public abstract class AbstractGraphBuilder implements GraphBuilder<GraphNode> {
    */
   @Override
   public GraphNode getEffectiveNode(GraphNode node) {
-    String key = escape(this.nodeNameRenderer.createNodeName(node));
+    String key = this.nodeNameRenderer.createNodeName(node);
     if (this.nodeDefinitions.containsKey(key)) {
       return this.nodeDefinitions.get(key);
     }
@@ -95,7 +86,7 @@ public abstract class AbstractGraphBuilder implements GraphBuilder<GraphNode> {
 
   private void addNode(GraphNode node) {
     String nodeName = this.nodeNameRenderer.createNodeName(node);
-    this.nodeDefinitions.put(escape(nodeName), node);
+    this.nodeDefinitions.put(nodeName, node);
   }
 
   static NodeNameRenderer<GraphNode> createDefaultNodeNameRenderer() {
