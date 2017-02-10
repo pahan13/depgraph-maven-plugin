@@ -71,8 +71,7 @@ import com.google.common.collect.Iterables;
 abstract class AbstractGraphMojo extends AbstractMojo {
 
   private static final Pattern LINE_SEPARATOR_PATTERN = Pattern.compile("\r?\n");
-  private static final String DOT_EXTENSION = ".dot";
-  private static final String OUTPUT_DOT_FILE_NAME = "dependency-graph" + DOT_EXTENSION;
+  private static final String OUTPUT_FILE_NAME = "dependency-graph";
 
   /**
    * The scope of the artifacts that should be included in the graph. An empty string indicates all scopes (default).
@@ -128,7 +127,7 @@ abstract class AbstractGraphMojo extends AbstractMojo {
    *
    * @since 1.0.0
    */
-  @Parameter(property = "outputFile", defaultValue = "${project.build.directory}/" + OUTPUT_DOT_FILE_NAME)
+  @Parameter(property = "outputFile", defaultValue = "${project.build.directory}/" + OUTPUT_FILE_NAME)
   private File outputFile;
 
   /**
@@ -199,7 +198,7 @@ abstract class AbstractGraphMojo extends AbstractMojo {
     try {
       GraphFactory graphFactory = createGraphFactory(globalFilter, targetFilter, styleConfiguration);
 
-      writeDotFile(graphFactory.createGraph(this.project));
+      writeGraphFile(graphFactory.createGraph(this.project));
 
       if (this.createImage) {
         createGraphImage();
@@ -307,20 +306,27 @@ abstract class AbstractGraphMojo extends AbstractMojo {
     return customStyleResource;
   }
 
-  private void writeDotFile(String dotGraph) throws IOException {
-    Path outputFilePath = this.outputFile.toPath();
+  private void writeGraphFile(String graph) throws IOException {
+    String ext = "." + outputFormat.toString().toLowerCase();
+    
+    File targetFile = this.outputFile;
+    if(!targetFile.getName().endsWith(ext)){
+      targetFile = new File(targetFile.getAbsolutePath() + ext);
+    }
+    
+    Path outputFilePath = targetFile.toPath();
     Path parent = outputFilePath.getParent();
     if (parent != null) {
       Files.createDirectories(parent);
     }
 
     try (Writer writer = Files.newBufferedWriter(outputFilePath, StandardCharsets.UTF_8)) {
-      writer.write(dotGraph);
+      writer.write(graph);
     }
   }
 
   private void createGraphImage() throws IOException {
-    String graphFileName = createGraphFileName();
+    String graphFileName = createOutputImageName();
     Path graphFile = this.outputFile.toPath().getParent().resolve(graphFileName);
 
     String dotExecutable = determineDotExecutable();
@@ -361,15 +367,11 @@ abstract class AbstractGraphMojo extends AbstractMojo {
     getLog().info("Graph image created on " + graphFile.toAbsolutePath());
   }
 
-  private String createGraphFileName() {
+  private String createOutputImageName() {
     String dotFileName = this.outputFile.getName();
 
-    String graphFileName;
-    if (dotFileName.endsWith(DOT_EXTENSION)) {
-      graphFileName = dotFileName.substring(0, dotFileName.lastIndexOf(".")) + "." + this.imageFormat;
-    } else {
-      graphFileName = dotFileName + this.imageFormat;
-    }
+    String graphFileName = dotFileName + this.imageFormat;
+
     return graphFileName;
   }
 
