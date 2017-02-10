@@ -16,7 +16,7 @@
 package com.github.ferstl.depgraph.graph.style;
 
 import org.apache.commons.lang3.StringUtils;
-import com.github.ferstl.depgraph.dot.AttributeBuilder;
+import com.github.ferstl.depgraph.export.AttributeBuilder;
 
 class Font {
 

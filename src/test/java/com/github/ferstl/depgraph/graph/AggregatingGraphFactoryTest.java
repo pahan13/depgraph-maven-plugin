@@ -25,7 +25,7 @@ import org.apache.maven.shared.dependency.graph.DependencyNode;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
-import com.github.ferstl.depgraph.dot.DotBuilder;
+import com.github.ferstl.depgraph.export.DotBuilder;
 import static com.github.ferstl.depgraph.dot.DotBuilderMatcher.emptyGraph;
 import static com.github.ferstl.depgraph.dot.DotBuilderMatcher.hasNodesAndEdges;
 import static org.junit.Assert.assertThat;

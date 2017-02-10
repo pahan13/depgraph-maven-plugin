@@ -21,7 +21,7 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
-import com.github.ferstl.depgraph.dot.DotBuilder;
+import com.github.ferstl.depgraph.export.DotBuilder;
 import com.github.ferstl.depgraph.graph.DependencyEdgeAttributeRenderer;
 import com.github.ferstl.depgraph.graph.DependencyNodeAttributeRenderer;
 import com.github.ferstl.depgraph.graph.GraphBuilderAdapter;

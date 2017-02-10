@@ -22,7 +22,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import com.github.ferstl.depgraph.dot.AttributeBuilder;
+import com.github.ferstl.depgraph.export.AttributeBuilder;
 import com.github.ferstl.depgraph.graph.NodeResolution;
 import com.github.ferstl.depgraph.graph.style.resource.ClasspathStyleResource;
 import com.github.ferstl.depgraph.graph.style.resource.FileSystemStyleResource;

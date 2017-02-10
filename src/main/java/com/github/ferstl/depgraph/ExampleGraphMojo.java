@@ -22,7 +22,7 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.shared.dependency.tree.DependencyNode;
-import com.github.ferstl.depgraph.dot.DotBuilder;
+import com.github.ferstl.depgraph.export.DotBuilder;
 import com.github.ferstl.depgraph.graph.GraphFactory;
 import com.github.ferstl.depgraph.graph.GraphNode;
 import com.github.ferstl.depgraph.graph.style.StyleConfiguration;

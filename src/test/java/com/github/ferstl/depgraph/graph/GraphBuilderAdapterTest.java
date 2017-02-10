@@ -27,7 +27,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.mockito.Matchers;
-import com.github.ferstl.depgraph.dot.DotBuilder;
+import com.github.ferstl.depgraph.export.DotBuilder;
 import static java.util.EnumSet.allOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;

@@ -20,6 +20,7 @@ import java.util.List;
 import org.codehaus.plexus.util.StringUtils;
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;
+import com.github.ferstl.depgraph.export.DotBuilder;
 import com.github.ferstl.depgraph.graph.GraphNode;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 

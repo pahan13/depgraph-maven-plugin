@@ -15,8 +15,8 @@
  */
 package com.github.ferstl.depgraph.graph;
 
-import com.github.ferstl.depgraph.dot.AttributeBuilder;
-import com.github.ferstl.depgraph.dot.EdgeAttributeRenderer;
+import com.github.ferstl.depgraph.export.AttributeBuilder;
+import com.github.ferstl.depgraph.export.EdgeAttributeRenderer;
 import com.github.ferstl.depgraph.graph.style.StyleConfiguration;
 import static com.google.common.collect.Iterables.getFirst;
 

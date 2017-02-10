@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.github.ferstl.depgraph.dot.AttributeBuilder;
+import com.github.ferstl.depgraph.export.AttributeBuilder;
 import com.github.ferstl.depgraph.graph.NodeResolution;
 import com.github.ferstl.depgraph.graph.style.resource.StyleResource;
 import static com.github.ferstl.depgraph.graph.NodeResolution.INCLUDED;

@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.ferstl.depgraph.dot;
+package com.github.ferstl.depgraph.export;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import static com.github.ferstl.depgraph.export.DotEscaper.escape;
 import java.util.Set;
-import static com.github.ferstl.depgraph.dot.DotEscaper.escape;
 
 /**
  * A builder to create <a href="http://www.graphviz.org/doc/info/lang.html">DOT</a> strings by defining edges between

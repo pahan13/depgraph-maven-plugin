@@ -16,6 +16,7 @@
 package com.github.ferstl.depgraph.dot;
 
 import org.junit.Test;
+import com.github.ferstl.depgraph.export.AttributeBuilder;
 import static org.junit.Assert.assertEquals;
 
 /**

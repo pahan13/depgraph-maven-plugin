@@ -16,6 +16,7 @@
 package com.github.ferstl.depgraph.dot;
 
 import org.junit.Test;
+import com.github.ferstl.depgraph.export.LabelBuilder;
 import static org.hamcrest.Matchers.emptyString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
